@@ -1,0 +1,8 @@
+services:
+  gateway:
+    restart: always
+    command: ["uv", "run", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]
+  postgres:
+    restart: always
+  redis:
+    restart: always
