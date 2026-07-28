@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     server_port: int = 8000
     server_workers: int = 2
 
-    database_url: str = "******postgres:5432/api_gateway"
+    database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/api_gateway"
     redis_url: str = "redis://redis:6379/0"
 
     jwt_secret_key: SecretStr = Field(default=SecretStr("change-me-in-production"))
