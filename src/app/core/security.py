@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime, timedelta
-from typing import Any
+from typing import Any, cast
 from uuid import UUID
 
 from argon2 import PasswordHasher
@@ -33,8 +33,11 @@ def create_access_token(subject: UUID, settings: Settings, scopes: list[str] | N
         "exp": expires_at,
         "iat": datetime.now(UTC),
     }
-    return jwt.encode(
-        payload, settings.jwt_secret_key.get_secret_value(), algorithm=settings.jwt_algorithm
+    return cast(
+        str,
+        jwt.encode(
+            payload, settings.jwt_secret_key.get_secret_value(), algorithm=settings.jwt_algorithm
+        ),
     )
 
 
@@ -47,15 +50,23 @@ def create_refresh_token(subject: UUID, token_family: UUID, settings: Settings) 
         "exp": expires_at,
         "iat": datetime.now(UTC),
     }
-    return jwt.encode(
-        payload, settings.jwt_secret_key.get_secret_value(), algorithm=settings.jwt_algorithm
+    return cast(
+        str,
+        jwt.encode(
+            payload, settings.jwt_secret_key.get_secret_value(), algorithm=settings.jwt_algorithm
+        ),
     )
 
 
 def decode_token(token: str, settings: Settings) -> dict[str, Any]:
     try:
-        return jwt.decode(
-            token, settings.jwt_secret_key.get_secret_value(), algorithms=[settings.jwt_algorithm]
+        return cast(
+            dict[str, Any],
+            jwt.decode(
+                token,
+                settings.jwt_secret_key.get_secret_value(),
+                algorithms=[settings.jwt_algorithm],
+            ),
         )
     except JWTError as exc:
         raise ValueError("Invalid token") from exc

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 import logging
 import sys
 
@@ -10,7 +12,7 @@ from app.core.config import Settings
 
 def configure_logging(*, settings: Settings) -> None:
     timestamper = structlog.processors.TimeStamper(fmt="iso", utc=True)
-    shared_processors = [
+    shared_processors: list[Any] = [
         structlog.contextvars.merge_contextvars,
         structlog.stdlib.add_log_level,
         timestamper,

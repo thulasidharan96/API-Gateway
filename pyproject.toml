@@ -66,6 +66,14 @@ warn_unused_ignores = true
 show_error_codes = true
 plugins = []
 
+[[tool.mypy.overrides]]
+module = [
+    "jose.*",
+    "prometheus_fastapi_instrumentator.*",
+]
+ignore_missing_imports = true
+
+
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 pythonpath = ["src"]
