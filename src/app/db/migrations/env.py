@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Any
 from logging.config import fileConfig
+from typing import Any
 
 from alembic import context
 from sqlalchemy import pool
@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 
 from app.core.config import get_settings
 from app.db.base import Base
-from app.db.models import *  # noqa: F401,F403
+from app.db.models import *  # noqa: F403
 
 config = context.config
 settings = get_settings()
